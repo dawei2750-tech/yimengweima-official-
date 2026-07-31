@@ -14,6 +14,7 @@ function read(file) {
 const html = read('index.html');
 const css = read('styles.css');
 const js = read('main.js');
+const pkg = JSON.parse(read('package.json'));
 const vercel = JSON.parse(read('vercel.json'));
 
 const requiredAssets = [
@@ -91,6 +92,21 @@ for (const token of ['initEntranceMotion', 'window.gsap', 'prefers-reduced-motio
 
 if (vercel.cleanUrls !== true) {
   throw new Error('vercel cleanUrls must be enabled');
+}
+
+if (pkg.scripts?.['measure:h5'] !== 'node tools/measure-h5-layout.mjs') {
+  throw new Error('package.json must expose npm run measure:h5');
+}
+
+if (pkg.scripts?.['measure:h5:strict'] !== 'node tools/measure-h5-layout.mjs --strict') {
+  throw new Error('package.json must expose npm run measure:h5:strict');
+}
+
+const measureScript = read('tools/measure-h5-layout.mjs');
+for (const token of ['REFERENCE_SIZE', 'VIEWPORT', 'SELECTORS', 'THRESHOLDS', 'getBoundingClientRect', 'deltaPercent']) {
+  if (!measureScript.includes(token)) {
+    throw new Error(`missing H5 measurement token: ${token}`);
+  }
 }
 
 console.log('official site validation ok');

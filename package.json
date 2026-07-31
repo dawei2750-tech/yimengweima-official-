@@ -3,6 +3,8 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
+    "measure:h5": "node tools/measure-h5-layout.mjs",
+    "measure:h5:strict": "node tools/measure-h5-layout.mjs --strict",
     "test": "node scripts/validate-site.mjs",
     "start": "npx serve ."
   }
