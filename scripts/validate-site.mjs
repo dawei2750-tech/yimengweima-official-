@@ -66,7 +66,7 @@ for (const token of ['@media (max-width: 760px)', 'perspective', 'backdrop-filte
   }
 }
 
-for (const token of ['hero-copy', 'deck-stage', 'mask-image', 'scroll-padding-left', 'animation-ready']) {
+for (const token of ['hero-copy', 'deck-stage', 'mask-image', 'grid-template-columns: repeat(4', 'animation-ready']) {
   if (!css.includes(token)) {
     throw new Error(`missing next-stage UI CSS token: ${token}`);
   }

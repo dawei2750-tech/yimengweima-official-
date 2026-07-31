@@ -125,7 +125,14 @@ async function loadPlaywright() {
 function summarizeFailures(measurements) {
   const failures = [];
   for (const [name, data] of Object.entries(measurements)) {
-    const posMax = Math.max(Math.abs(data.deltaPercent.x), Math.abs(data.deltaPercent.y));
+    const positionDeltas = ['x', 'y'].map((axis) => {
+      const expected = data.expected[axis];
+      if (expected === 0) {
+        return data.delta[axis] === 0 ? 0 : Math.abs(data.delta[axis]);
+      }
+      return Math.abs(data.deltaPercent[axis]);
+    });
+    const posMax = Math.max(...positionDeltas);
     const sizeMax = Math.max(Math.abs(data.deltaPercent.w), Math.abs(data.deltaPercent.h));
     if (posMax > THRESHOLDS.positionPercent || sizeMax > THRESHOLDS.sizePercent) {
       failures.push({ name, posMax, sizeMax, data });
