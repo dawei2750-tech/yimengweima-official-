@@ -151,6 +151,42 @@ button {
   overflow: hidden;
 }
 
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.hero::before {
+  z-index: 1;
+  left: 24%;
+  top: 11%;
+  width: 58vw;
+  height: 52vh;
+  background:
+    radial-gradient(ellipse at 52% 44%, rgba(244, 241, 234, 0.18), transparent 11%),
+    radial-gradient(ellipse at 58% 48%, rgba(73, 214, 194, 0.18), transparent 34%),
+    linear-gradient(116deg, transparent 8%, rgba(244, 241, 234, 0.1) 46%, transparent 72%);
+  filter: blur(18px);
+  mix-blend-mode: screen;
+  opacity: 0.62;
+}
+
+.hero::after {
+  z-index: 2;
+  left: 31%;
+  top: 30%;
+  width: 45vw;
+  height: 25vh;
+  background:
+    radial-gradient(ellipse at 12% 70%, rgba(73, 214, 194, 0.22), transparent 28%),
+    radial-gradient(ellipse at 82% 22%, rgba(244, 241, 234, 0.14), transparent 22%);
+  filter: blur(24px);
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+
 .hero-bg-image {
   position: absolute;
   inset: 0;
@@ -195,6 +231,22 @@ button {
 .animation-ready .hero-copy,
 .animation-ready .deck-stage {
   transform-origin: center;
+}
+
+.animation-fallback-visible .hero-horse-image,
+.animation-fallback-visible .topbar,
+.animation-fallback-visible .hero-copy,
+.animation-fallback-visible .deck-stage,
+.animation-fallback-visible .hero-copy > *,
+.animation-fallback-visible .experience-card {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.animation-fallback-visible .hero-copy,
+.animation-fallback-visible .hero-copy > *,
+.animation-fallback-visible .deck-stage {
+  transform: none !important;
 }
 
 .topbar {
@@ -264,7 +316,7 @@ button {
   z-index: 2;
   display: grid;
   place-items: center;
-  min-height: calc(100vh - 282px);
+  min-height: calc(100vh - 316px);
   padding-top: 24px;
   text-align: center;
   perspective: 1200px;
@@ -375,13 +427,29 @@ h1 {
   z-index: 1;
   margin: 0;
   max-width: min(1500px, 82vw);
-  color: rgba(244, 241, 234, 0.92);
+  color: transparent;
+  background:
+    linear-gradient(180deg, #fffdf7 0%, #cfc8ba 42%, #f4f1ea 58%, #827f78 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
   font-size: clamp(58px, 9vw, 146px);
   font-weight: 400;
   line-height: 0.9;
   letter-spacing: 0;
-  text-shadow: 0 0 36px rgba(255, 255, 255, 0.15);
+  text-shadow: 0 0 24px rgba(255, 255, 255, 0.18), 0 10px 36px rgba(0, 0, 0, 0.28);
   text-wrap: balance;
+}
+
+h1::after {
+  content: "";
+  position: absolute;
+  left: 28%;
+  right: 28%;
+  top: 108%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 241, 234, 0.48), rgba(73, 214, 194, 0.38), transparent);
+  box-shadow: 0 0 18px rgba(73, 214, 194, 0.32);
+  opacity: 0.48;
 }
 
 .subtitle {
@@ -449,8 +517,8 @@ h1 {
 .deck-stage {
   position: relative;
   z-index: 3;
-  max-width: 1140px;
-  margin: 0 auto;
+  max-width: 1180px;
+  margin: -4px auto 0;
   perspective: 1600px;
   transform-style: preserve-3d;
 }
@@ -466,55 +534,76 @@ h1 {
 
 .deck-reflection {
   position: absolute;
-  left: 7%;
-  right: 7%;
-  bottom: -34px;
-  height: 46px;
-  background: linear-gradient(90deg, transparent, rgba(73, 214, 194, 0.2), rgba(244, 241, 234, 0.13), transparent);
-  filter: blur(18px);
-  transform: rotateX(72deg);
-  opacity: 0.74;
+  left: 5%;
+  right: 5%;
+  bottom: -44px;
+  height: 74px;
+  background:
+    radial-gradient(ellipse at 14% 50%, rgba(73, 214, 194, 0.32), transparent 36%),
+    radial-gradient(ellipse at 86% 46%, rgba(244, 241, 234, 0.18), transparent 30%),
+    linear-gradient(90deg, transparent, rgba(73, 214, 194, 0.2), rgba(244, 241, 234, 0.16), transparent);
+  filter: blur(16px);
+  transform: rotateX(68deg) translateZ(-38px);
+  opacity: 0.82;
   pointer-events: none;
 }
 
 .card-deck {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: 1.18fr 0.94fr 0.98fr 1.03fr;
+  gap: 18px;
+  align-items: end;
   transform-style: preserve-3d;
+}
+
+.card-deck::after {
+  content: "";
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  bottom: -17px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(73, 214, 194, 0.56), rgba(244, 241, 234, 0.34), transparent);
+  box-shadow: 0 0 26px rgba(73, 214, 194, 0.34);
+  transform: translateZ(-80px);
+  pointer-events: none;
 }
 
 .experience-card {
   position: relative;
-  min-height: 148px;
+  min-height: 154px;
   overflow: hidden;
-  padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
+  padding: 24px 24px 22px;
+  border: 1px solid rgba(244, 241, 234, 0.24);
+  border-radius: 14px;
   background: linear-gradient(135deg, rgba(73, 214, 194, 0.16), rgba(255, 255, 255, 0.05)),
     linear-gradient(145deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.68));
-  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.4), inset 0 0 34px rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(18px);
+  box-shadow:
+    0 28px 68px rgba(0, 0, 0, 0.46),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -28px 42px rgba(0, 0, 0, 0.36);
+  backdrop-filter: blur(16px);
   transform: rotateX(4deg) rotateY(-8deg);
   transform-style: preserve-3d;
   transition: transform 220ms ease, border-color 220ms ease;
 }
 
 .experience-card:nth-child(1) {
-  transform: translate3d(0, -8px, 58px) rotateX(5deg) rotateY(-10deg);
+  min-height: 168px;
+  transform: translate3d(0, -14px, 86px) rotateX(7deg) rotateY(-13deg);
 }
 
 .experience-card:nth-child(2) {
-  transform: translate3d(-8px, 10px, 8px) rotateX(4deg) rotateY(-4deg) scale(0.96);
+  transform: translate3d(-10px, 14px, 16px) rotateX(5deg) rotateY(-5deg) scale(0.96);
 }
 
 .experience-card:nth-child(3) {
-  transform: translate3d(8px, 14px, -18px) rotateX(5deg) rotateY(5deg) scale(0.95);
+  transform: translate3d(10px, 18px, -20px) rotateX(6deg) rotateY(6deg) scale(0.95);
 }
 
 .experience-card:nth-child(4) {
-  transform: translate3d(0, 8px, -38px) rotateX(4deg) rotateY(12deg) scale(0.94);
+  transform: translate3d(4px, 6px, -42px) rotateX(5deg) rotateY(14deg) scale(0.95);
 }
 
 .card-image {
@@ -546,8 +635,11 @@ h1 {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.32), transparent 8%),
-    linear-gradient(130deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.32), transparent 1px) left / 1px 100% no-repeat,
+    linear-gradient(180deg, rgba(255, 255, 255, 0.26), transparent 1px) top / 100% 1px no-repeat,
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.34), transparent 8%),
+    linear-gradient(130deg, transparent, rgba(255, 255, 255, 0.13), transparent);
   z-index: 1;
   opacity: 0.82;
 }
@@ -697,6 +789,22 @@ h1 {
     overflow-x: hidden;
   }
 
+  .hero::before {
+    left: -14%;
+    top: 12%;
+    width: 118vw;
+    height: 36vh;
+    opacity: 0.46;
+  }
+
+  .hero::after {
+    left: 5%;
+    top: 29%;
+    width: 88vw;
+    height: 22vh;
+    opacity: 0.42;
+  }
+
   .hero-bg-image {
     background-position: center top;
     opacity: 0.72;
@@ -793,31 +901,61 @@ h1 {
   .card-deck {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 8px;
+    gap: 9px;
     width: 100%;
     margin-left: 0;
     overflow: visible;
-    padding: 8px 0 14px 2px;
+    padding: 8px 0 18px 2px;
     scroll-snap-type: none;
+  }
+
+  .card-deck::after {
+    left: 6%;
+    right: 8%;
+    bottom: 2px;
+    opacity: 0.68;
   }
 
   .experience-card {
     min-width: 0;
     min-height: 0;
-    aspect-ratio: 0.51;
-    padding: 12px 8px;
+    aspect-ratio: 0.47;
+    padding: 12px 8px 10px;
     scroll-snap-align: none;
     transform: rotateX(0) rotateY(-5deg);
     border-radius: 8px;
+    border-color: rgba(244, 241, 234, 0.26);
+    box-shadow:
+      0 18px 34px rgba(0, 0, 0, 0.36),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      inset 0 -24px 30px rgba(0, 0, 0, 0.36);
   }
 
   .experience-card:nth-child(n) {
-    transform: rotateX(0) rotateY(-5deg);
+    transform: rotateX(0) rotateY(-4deg);
+  }
+
+  .experience-card:nth-child(1) {
+    transform: translateY(-4px) rotateX(0) rotateY(-6deg);
+  }
+
+  .experience-card:nth-child(2) {
+    transform: translateY(1px) rotateX(0) rotateY(-2deg);
+  }
+
+  .experience-card:nth-child(3) {
+    transform: translateY(-2px) rotateX(0) rotateY(2deg);
+  }
+
+  .experience-card:nth-child(4) {
+    transform: translateY(1px) rotateX(0) rotateY(5deg);
   }
 
   .experience-card h2 {
-    margin-top: 46px;
-    font-size: 18px;
+    margin-top: 54px;
+    font-size: 14px;
+    line-height: 1.12;
+    white-space: nowrap;
   }
 
   .experience-card span {
@@ -850,10 +988,24 @@ h1 {
   .mobile-nav-dots {
     position: absolute;
     z-index: 4;
-    right: 12px;
-    top: 35vh;
-    display: grid;
-    gap: 9px;
+    right: 10px;
+    top: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+
+  .mobile-nav-dots span {
+    display: inline-grid;
+    grid-template-columns: 13px 18px;
+    align-items: center;
+    justify-items: center;
+    gap: 6px;
+    min-height: 38px;
+    color: rgba(244, 241, 234, 0.54);
+    font-size: 12px;
+    line-height: 1;
   }
 
   .mobile-nav-dots i {
@@ -864,8 +1016,25 @@ h1 {
     background: rgba(244, 241, 234, 0.32);
   }
 
-  .mobile-nav-dots i.active {
-    height: 24px;
+  .mobile-nav-dots b {
+    display: grid;
+    gap: 3px;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .mobile-nav-dots em {
+    display: block;
+    font-style: normal;
+  }
+
+  .mobile-nav-dots .active {
+    color: rgba(73, 214, 194, 0.96);
+  }
+
+  .mobile-nav-dots .active i {
+    width: 13px;
+    height: 13px;
     border-radius: 999px;
     background: rgba(73, 214, 194, 0.88);
     box-shadow: 0 0 16px rgba(73, 214, 194, 0.62);

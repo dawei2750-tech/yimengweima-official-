@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const root = path.resolve('/root/yimengweima-official');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 function read(file) {
   const target = path.join(root, file);
@@ -16,6 +17,10 @@ const css = read('styles.css');
 const js = read('main.js');
 const pkg = JSON.parse(read('package.json'));
 const vercel = JSON.parse(read('vercel.json'));
+
+if (root !== process.cwd()) {
+  throw new Error('validate-site.mjs must resolve files from the current checkout');
+}
 
 const requiredAssets = [
   'assets/hero-dream-horse-v2-wide-feathered.png',
@@ -87,6 +92,50 @@ for (const token of ['requestAnimationFrame', 'pointermove', 'card.style.transfo
 for (const token of ['initEntranceMotion', 'window.gsap', 'prefers-reduced-motion', 'data-animate']) {
   if (!js.includes(token)) {
     throw new Error(`missing GSAP motion token: ${token}`);
+  }
+}
+
+for (const token of ['animation-fallback-visible', 'setTimeout(showAnimationFallback', "document.body.classList.add('animation-complete')"]) {
+  if (!js.includes(token)) {
+    throw new Error(`missing animation fallback token: ${token}`);
+  }
+}
+
+if (!js.includes('setTimeout(showAnimationFallback, 5600)')) {
+  throw new Error('animation fallback timeout should wait until the GSAP entrance timeline has completed');
+}
+
+for (const token of ['.animation-fallback-visible .hero-horse-image', '.animation-fallback-visible .hero-copy', '.animation-fallback-visible .deck-stage']) {
+  if (!css.includes(token)) {
+    throw new Error(`missing animation fallback CSS token: ${token}`);
+  }
+}
+
+if (css.includes('.animation-fallback-visible .experience-card {\n  transform: none')) {
+  throw new Error('animation fallback must preserve card stage transforms');
+}
+
+for (const token of ['.card-deck::after', '.experience-card:nth-child(1)', '.deck-reflection']) {
+  if (!css.includes(token)) {
+    throw new Error(`missing PC card stage CSS token: ${token}`);
+  }
+}
+
+for (const label of [
+  ['首', '页'],
+  ['策', '展'],
+  ['灵', '感'],
+  ['定', '制'],
+  ['关', '于']
+]) {
+  if (!label.every((token) => html.includes(`<em>${token}</em>`))) {
+    throw new Error(`missing mobile nav label: ${label.join('')}`);
+  }
+}
+
+for (const token of ['.hero::before', '.hero::after', 'background-clip: text', 'mix-blend-mode: screen']) {
+  if (!css.includes(token)) {
+    throw new Error(`missing horse fusion/title CSS token: ${token}`);
   }
 }
 

@@ -8,6 +8,12 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 
 const pointer = { x: 0.5, y: 0.5, active: false };
 let particles = [];
+let entranceComplete = false;
+
+function showAnimationFallback() {
+  if (entranceComplete) return;
+  document.body.classList.add('animation-fallback-visible');
+}
 
 function resize() {
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -131,15 +137,24 @@ window.addEventListener('pointermove', (event) => {
 
 function initEntranceMotion() {
   document.body.classList.add('animation-ready');
+  setTimeout(showAnimationFallback, 5600);
 
   if (prefersReducedMotion.matches || !window.gsap) {
+    showAnimationFallback();
     return;
   }
 
   const gsap = window.gsap;
   const heroCopyItems = document.querySelectorAll('[data-animate="copy"] > *');
   const deckCards = document.querySelectorAll('[data-animate="deck"] .experience-card');
-  const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  const timeline = gsap.timeline({
+    defaults: { ease: 'power3.out' },
+    onComplete: () => {
+      entranceComplete = true;
+      document.body.classList.add('animation-complete');
+      document.body.classList.remove('animation-fallback-visible');
+    }
+  });
 
   gsap.set('[data-animate="topbar"], [data-animate="copy"], [data-animate="deck"]', { opacity: 0 });
   gsap.set('[data-animate="bg"]', { opacity: 0, scale: 1.08 });
