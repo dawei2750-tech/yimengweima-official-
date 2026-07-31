@@ -1,0 +1,9 @@
+{
+  "name": "yimengweima-official",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "test": "node scripts/validate-site.mjs",
+    "start": "npx serve ."
+  }
+}
