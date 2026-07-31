@@ -71,6 +71,12 @@ for (const token of ['hero-copy', 'deck-stage', 'mask-image', 'scroll-padding-le
   }
 }
 
+for (const token of ['max-width: min(1500px, 82vw)', '@media (max-width: 1100px)', 'font-size: 24px']) {
+  if (!css.includes(token)) {
+    throw new Error(`missing multi-size refinement CSS token: ${token}`);
+  }
+}
+
 for (const token of ['requestAnimationFrame', 'pointermove', 'card.style.transform', 'drawHorse']) {
   if (!js.includes(token)) {
     throw new Error(`missing interaction token: ${token}`);
