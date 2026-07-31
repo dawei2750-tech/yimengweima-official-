@@ -2,6 +2,8 @@ const canvas = document.getElementById('particle-canvas');
 const ctx = canvas.getContext('2d');
 const cards = [...document.querySelectorAll('.experience-card')];
 const cta = document.querySelector('.magnetic-cta');
+const heroHorseImage = document.querySelector('.hero-horse-image');
+const heroBgImage = document.querySelector('.hero-bg-image');
 
 const pointer = { x: 0.5, y: 0.5, active: false };
 let particles = [];
@@ -84,7 +86,9 @@ function draw(time) {
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
+  ctx.globalAlpha = 0.42;
   drawHorse(time);
+  ctx.globalAlpha = 1;
 
   ctx.globalCompositeOperation = 'lighter';
   for (const p of particles) {
@@ -99,6 +103,19 @@ function draw(time) {
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(73,214,194,${p.a})`;
     ctx.fill();
+  }
+
+  const isMobile = window.innerWidth < 760;
+  if (heroHorseImage) {
+    const baseX = isMobile ? '-50%' : '-38%';
+    heroHorseImage.style.transform = `translateX(${baseX}) translate(${(pointer.x - 0.5) * 28}px, ${
+      (pointer.y - 0.5) * 18
+    }px)`;
+  }
+  if (heroBgImage) {
+    heroBgImage.style.transform = `scale(1.04) translate(${(0.5 - pointer.x) * 12}px, ${
+      (0.5 - pointer.y) * 8
+    }px)`;
   }
 
   requestAnimationFrame(draw);
