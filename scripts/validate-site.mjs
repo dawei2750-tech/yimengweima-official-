@@ -18,7 +18,7 @@ const pkg = JSON.parse(read('package.json'));
 const vercel = JSON.parse(read('vercel.json'));
 
 const requiredAssets = [
-  'assets/hero-dream-horse.png',
+  'assets/hero-dream-horse-v2-wide-feathered.png',
   'assets/hero-gallery-bg.jpg',
   'assets/card-light-flow-horse.jpg',
   'assets/card-dark-rose.jpg',
