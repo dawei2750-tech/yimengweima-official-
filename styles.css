@@ -151,6 +151,39 @@ button {
   overflow: hidden;
 }
 
+.hero-bg-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(180deg, rgba(3, 4, 6, 0.18), rgba(3, 4, 6, 0.9)),
+    url("./assets/hero-gallery-bg.jpg") center / cover no-repeat;
+  opacity: 0.78;
+  transform: scale(1.04);
+  transform-origin: center;
+  will-change: transform;
+}
+
+.hero-bg-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 54% 30%, rgba(73, 214, 194, 0.12), transparent 30%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.72), transparent 26%, transparent 72%, rgba(0, 0, 0, 0.7));
+}
+
+.hero-horse-image {
+  position: absolute;
+  z-index: 1;
+  top: 2vh;
+  left: 50%;
+  width: min(980px, 72vw);
+  transform: translateX(-38%);
+  opacity: 0.95;
+  filter: drop-shadow(0 0 42px rgba(73, 214, 194, 0.3));
+  pointer-events: none;
+  will-change: transform;
+}
+
 .topbar {
   position: relative;
   z-index: 3;
@@ -174,6 +207,14 @@ button {
   border: 1px solid rgba(244, 241, 234, 0.54);
   border-radius: 50%;
   color: var(--ink);
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .brand-lockup strong,
@@ -223,7 +264,7 @@ button {
   width: min(720px, 62vw);
   height: min(420px, 38vw);
   transform: translateX(-44%) rotate(-5deg);
-  opacity: 0.9;
+  opacity: 0.42;
 }
 
 .horse-core {
@@ -411,13 +452,47 @@ h1 {
   transition: transform 220ms ease, border-color 220ms ease;
 }
 
+.card-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.64;
+  filter: saturate(0.82) contrast(1.08) brightness(0.78);
+  transform: scale(1.02);
+}
+
+.card-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 8%, rgba(255, 255, 255, 0.22) 42%, transparent 68%);
+  transform: translateX(-70%);
+  opacity: 0.32;
+  pointer-events: none;
+}
+
+.experience-card:hover .card-sheen {
+  transform: translateX(70%);
+  transition: transform 700ms ease;
+}
+
 .experience-card::before {
   content: "";
   position: absolute;
   inset: 0;
   background: radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.32), transparent 8%),
     linear-gradient(130deg, transparent, rgba(255, 255, 255, 0.12), transparent);
-  opacity: 0.5;
+  z-index: 1;
+  opacity: 0.82;
+}
+
+.experience-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.32) 48%, rgba(0, 0, 0, 0.78) 100%);
 }
 
 .experience-card.rose {
@@ -441,7 +516,7 @@ h1 {
 .experience-card p,
 .experience-card button {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .experience-card span {
@@ -531,8 +606,10 @@ h1 {
 }
 
 @media (max-width: 760px) {
+  html,
   body {
     min-height: 100vh;
+    overflow-x: hidden;
   }
 
   .rail {
@@ -542,6 +619,18 @@ h1 {
   .hero {
     min-height: 100vh;
     padding: 28px 18px 28px;
+  }
+
+  .hero-bg-image {
+    background-position: center top;
+    opacity: 0.72;
+  }
+
+  .hero-horse-image {
+    top: 8vh;
+    left: 50%;
+    width: min(136vw, 560px);
+    transform: translateX(-50%);
   }
 
   .top-actions {
@@ -558,8 +647,8 @@ h1 {
   }
 
   .hero-stage {
-    min-height: 58vh;
-    padding-top: 20px;
+    min-height: 64vh;
+    padding-top: 12px;
   }
 
   .hero-horse {
@@ -567,23 +656,23 @@ h1 {
     left: 49%;
     width: 120vw;
     height: 68vw;
-    opacity: 0.95;
+    opacity: 0.22;
   }
 
   h1 {
-    margin-top: 26vh;
-    font-size: clamp(54px, 18vw, 74px);
+    margin-top: 30vh;
+    font-size: clamp(46px, 16vw, 66px);
     line-height: 0.92;
   }
 
   .subtitle {
-    font-size: 18px;
-    letter-spacing: 4px;
+    font-size: 16px;
+    letter-spacing: 3px;
   }
 
   .magnetic-cta {
     height: 50px;
-    margin-top: 26px;
+    margin-top: 20px;
     padding: 0 34px;
   }
 
