@@ -4,6 +4,7 @@ const cards = [...document.querySelectorAll('.experience-card')];
 const cta = document.querySelector('.magnetic-cta');
 const heroHorseImage = document.querySelector('.hero-horse-image');
 const heroBgImage = document.querySelector('.hero-bg-image');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 const pointer = { x: 0.5, y: 0.5, active: false };
 let particles = [];
@@ -128,6 +129,36 @@ window.addEventListener('pointermove', (event) => {
   pointer.active = true;
 });
 
+function initEntranceMotion() {
+  document.body.classList.add('animation-ready');
+
+  if (prefersReducedMotion.matches || !window.gsap) {
+    return;
+  }
+
+  const gsap = window.gsap;
+  const heroCopyItems = document.querySelectorAll('[data-animate="copy"] > *');
+  const deckCards = document.querySelectorAll('[data-animate="deck"] .experience-card');
+  const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+  gsap.set('[data-animate="topbar"], [data-animate="copy"], [data-animate="deck"]', { opacity: 0 });
+  gsap.set('[data-animate="bg"]', { opacity: 0, scale: 1.08 });
+  gsap.set('[data-animate="horse"]', { opacity: 0, scale: 0.96, filter: 'blur(10px)' });
+  gsap.set(heroCopyItems, { opacity: 0, y: 32 });
+  gsap.set('[data-animate="cta"]', { filter: 'brightness(0.72)' });
+  gsap.set(deckCards, { opacity: 0, y: 34 });
+
+  timeline
+    .to('[data-animate="bg"]', { opacity: 0.78, scale: 1.04, duration: 1.1 })
+    .to('[data-animate="horse"]', { opacity: 0.95, scale: 1, filter: 'blur(0px)', duration: 1.35 }, '-=0.62')
+    .to('[data-animate="topbar"]', { opacity: 1, y: 0, duration: 0.72 }, '-=0.9')
+    .to('[data-animate="copy"]', { opacity: 1, duration: 0.2 }, '-=0.42')
+    .to(heroCopyItems, { opacity: 1, y: 0, duration: 0.86, stagger: 0.09 }, '-=0.18')
+    .to('[data-animate="cta"]', { filter: 'brightness(1)', duration: 0.48 }, '-=0.3')
+    .to('[data-animate="deck"]', { opacity: 1, y: 0, duration: 0.42 }, '-=0.12')
+    .to(deckCards, { opacity: 1, y: 0, duration: 0.82, stagger: 0.1, clearProps: 'transform' }, '-=0.28');
+}
+
 cards.forEach((card) => {
   card.addEventListener('pointermove', (event) => {
     const rect = card.getBoundingClientRect();
@@ -153,4 +184,5 @@ cta.addEventListener('pointerleave', () => {
 });
 
 resize();
+initEntranceMotion();
 requestAnimationFrame(draw);

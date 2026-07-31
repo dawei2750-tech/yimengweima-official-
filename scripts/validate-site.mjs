@@ -47,6 +47,12 @@ for (const token of ['particle-canvas', 'hero-horse', 'experience-card', 'magnet
   }
 }
 
+for (const token of ['gsap.min.js', 'data-animate=', 'mobile-nav-dots', 'swipe-hint', 'deck-reflection']) {
+  if (!html.includes(token)) {
+    throw new Error(`missing next-stage UI markup: ${token}`);
+  }
+}
+
 for (const token of ['hero-bg-image', 'hero-horse-image', 'card-image', 'card-sheen']) {
   if (!html.includes(token) && !css.includes(token)) {
     throw new Error(`missing visual layer token: ${token}`);
@@ -59,9 +65,21 @@ for (const token of ['@media (max-width: 760px)', 'perspective', 'backdrop-filte
   }
 }
 
+for (const token of ['hero-copy', 'deck-stage', 'mask-image', 'scroll-padding-left', 'animation-ready']) {
+  if (!css.includes(token)) {
+    throw new Error(`missing next-stage UI CSS token: ${token}`);
+  }
+}
+
 for (const token of ['requestAnimationFrame', 'pointermove', 'card.style.transform', 'drawHorse']) {
   if (!js.includes(token)) {
     throw new Error(`missing interaction token: ${token}`);
+  }
+}
+
+for (const token of ['initEntranceMotion', 'window.gsap', 'prefers-reduced-motion', 'data-animate']) {
+  if (!js.includes(token)) {
+    throw new Error(`missing GSAP motion token: ${token}`);
   }
 }
 
