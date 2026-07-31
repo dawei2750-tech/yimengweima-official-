@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="以梦为马 · 高定婚礼策展系统" />
     <title>以梦为马 | DREAM AS HORSE</title>
+    <link rel="preload" as="image" href="./assets/hero-gallery-bg.jpg" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -24,9 +25,13 @@
       </aside>
 
       <section class="hero" id="inspiration">
+        <div class="hero-bg-image" aria-hidden="true"></div>
+        <img class="hero-horse-image" src="./assets/hero-dream-horse.png" alt="" />
         <header class="topbar">
           <div class="brand-lockup">
-            <div class="brand-mark">马</div>
+            <div class="brand-mark">
+              <img src="./assets/logo-light-horse.png" alt="" />
+            </div>
             <div>
               <strong>以梦为马</strong>
               <span>DREAM AS HORSE</span>
@@ -62,24 +67,32 @@
 
         <section class="card-deck" aria-label="高定婚礼灵感">
           <article class="experience-card active" data-depth="1.8">
+            <img class="card-image" src="./assets/card-light-flow-horse.jpg" alt="" />
+            <div class="card-sheen" aria-hidden="true"></div>
             <span>01</span>
             <h2>流光梦马</h2>
             <p>LIGHT FLOW HORSE</p>
             <button aria-label="查看流光梦马">→</button>
           </article>
           <article class="experience-card rose" data-depth="1.2">
+            <img class="card-image" src="./assets/card-dark-rose.jpg" alt="" />
+            <div class="card-sheen" aria-hidden="true"></div>
             <span>02</span>
             <h2>暗夜玫瑰</h2>
             <p>DARK ROSE</p>
             <button aria-label="查看暗夜玫瑰">→</button>
           </article>
           <article class="experience-card dome" data-depth="1.5">
+            <img class="card-image" src="./assets/card-silver-dome.jpg" alt="" />
+            <div class="card-sheen" aria-hidden="true"></div>
             <span>03</span>
             <h2>银白穹顶</h2>
             <p>SILVER DOME</p>
             <button aria-label="查看银白穹顶">→</button>
           </article>
           <article class="experience-card gallery" data-depth="1.1">
+            <img class="card-image" src="./assets/card-art-gallery.jpg" alt="" />
+            <div class="card-sheen" aria-hidden="true"></div>
             <span>04</span>
             <h2>美术馆婚礼</h2>
             <p>ART GALLERY</p>
